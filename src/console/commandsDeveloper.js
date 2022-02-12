@@ -28,6 +28,7 @@ const developerQuestions = [
     },
     {
         type:"list",
+        message:"Choose the last day",
         name:"date",
         choices:[
             "Feb 28, 2021","Mar 1, 2021","Mar 2, 2021", "Mar 3, 2021",
@@ -37,7 +38,12 @@ const developerQuestions = [
 
 program.version("1.0.0").description("Command line tool for managing the developers of the MWC");
 
-program.command("list").alias("l").action(async ()=> {
+program.command("MWC-days").alias("MWC").action(()=>{
+    console.log("The event of the MWC are going to be between these days:\n Feb 28, 2021 \n Mar 1, 2021 \n Mar 2, 2021 \n Mar 3, 2021")
+    process.exit(0);
+})
+
+program.command("list").alias("l").action(async () => {
     const developers = await Developer.find().lean();
 
     if(developers.length === 0) {
@@ -56,7 +62,7 @@ program.command("list").alias("l").action(async ()=> {
     process.exit(0);
 });
 
-program.command("add").alias("a").action( async ()=>{
+program.command("add").alias("a").action( async () => {
     const answers= await prompt(developerQuestions)
     await Developer.create(answers)
     console.log("New assistant inserted")
@@ -64,7 +70,7 @@ program.command("add").alias("a").action( async ()=>{
     process.exit(0);
 });
 
-program.command("update <id>").alias("u").action( async (_id)=>{
+program.command("update <id>").alias("u").action( async (_id) =>{
     if (!_id) return console.log("please provide id")
     const answers = await prompt(developerQuestions)
     await Developer.updateOne({_id}, answers);
@@ -72,5 +78,12 @@ program.command("update <id>").alias("u").action( async (_id)=>{
     await connection.close();
     process.exit(0);
 })
+
+program.command("delete <id>").alias("d").action((_id) => {
+    if (!_id) return console.log("please provide id")
+    await Developer.findByIdAndDelete(_id)
+    console.log("Assistant deleted")
+    await connection.close()
+});
 
 program.parse(process.argv);

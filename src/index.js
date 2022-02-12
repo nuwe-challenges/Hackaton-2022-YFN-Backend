@@ -8,7 +8,7 @@ const {connectDB} = require("./db");
 
 async function main(){
     await connectDB();
-    app.listen(port, () => console.log("server listening on port", 9000))
+    app.listen(port);
 }
 
 main();
