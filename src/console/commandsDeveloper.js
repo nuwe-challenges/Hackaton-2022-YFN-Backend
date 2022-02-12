@@ -54,8 +54,15 @@ program.command("list").alias("l").action(async ()=> {
     }
     await connection.close();
     process.exit(0);
-})
+});
 
+program.command("add").alias("a").action( async ()=>{
+    const answers= await prompt(developerQuestions)
+    await Developer.create(answers)
+    console.log("New assistant inserted")
+    await connection.close()
+    process.exit(0);
+});
 
 
 program.parse(process.argv);
