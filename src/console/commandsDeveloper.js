@@ -64,5 +64,13 @@ program.command("add").alias("a").action( async ()=>{
     process.exit(0);
 });
 
+program.command("update <id>").alias("u").action( async (_id)=>{
+    if (!_id) return console.log("please provide id")
+    const answers = await prompt(developerQuestions)
+    await Developer.updateOne({_id}, answers);
+    console.log("Asistant updated");
+    await connection.close();
+    process.exit(0);
+})
 
 program.parse(process.argv);
