@@ -43,7 +43,7 @@ program.command("MWC-days").alias("MWC").action(()=>{
     process.exit(0);
 })
 
-program.command("list").alias("l").action(async () => {
+program.command("list").action(async () => {
     const developers = await Developer.find().lean();
 
     if(developers.length === 0) {
@@ -62,7 +62,7 @@ program.command("list").alias("l").action(async () => {
     process.exit(0);
 });
 
-program.command("add").alias("a").action( async () => {
+program.command("add").action( async () => {
     const answers= await prompt(developerQuestions)
     await Developer.create(answers)
     console.log("New assistant inserted")
@@ -70,7 +70,7 @@ program.command("add").alias("a").action( async () => {
     process.exit(0);
 });
 
-program.command("update <id>").alias("u").action( async (_id) =>{
+program.command("update <id>").action( async (_id) =>{
     if (!_id) return console.log("please provide id")
     const answers = await prompt(developerQuestions)
     await Developer.updateOne({_id}, answers);
@@ -79,7 +79,7 @@ program.command("update <id>").alias("u").action( async (_id) =>{
     process.exit(0);
 })
 
-program.command("delete <id>").alias("d").action((_id) => {
+program.command("delete <id>").action( async (_id) => {
     if (!_id) return console.log("please provide id")
     await Developer.findByIdAndDelete(_id)
     console.log("Assistant deleted")
