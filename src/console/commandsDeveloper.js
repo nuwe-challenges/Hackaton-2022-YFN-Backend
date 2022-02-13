@@ -1,8 +1,10 @@
+//Imports
 const {connection} = require("../db");
 const { program } = require("commander");
 const { prompt } = require("inquirer");
 const Developer  = require("../models/DeveloperModel");
 
+//Inputs relations with developer
 const developerQuestions = [
     {
         type: "input",
@@ -36,13 +38,16 @@ const developerQuestions = [
     }
 ];
 
+//Prepare the line command
 program.version("1.0.0").description("Command line tool for managing the developers of the MWC");
 
+//Show the days MWC
 program.command("MWC-days").action(()=>{
     console.log("The event of the MWC are going to be between these days:\n Feb 28, 2021 \n Mar 1, 2021 \n Mar 2, 2021 \n Mar 3, 2021")
     process.exit(0);
 })
 
+//Show all developers
 program.command("list").action(async () => {
     const developers = await Developer.find().lean();
 
@@ -62,6 +67,7 @@ program.command("list").action(async () => {
     process.exit(0);
 });
 
+//Add a new developer
 program.command("add").action( async () => {
     const answers= await prompt(developerQuestions)
     await Developer.create(answers)
@@ -70,6 +76,7 @@ program.command("add").action( async () => {
     process.exit(0);
 });
 
+//Update a developer
 program.command("update <id>").action( async (_id) =>{
     if (!_id) return console.log("please provide id")
     const answers = await prompt(developerQuestions)
@@ -79,6 +86,7 @@ program.command("update <id>").action( async (_id) =>{
     process.exit(0);
 })
 
+//Delete a developer
 program.command("delete <id>").action( async (_id) => {
     if (!_id) return console.log("please provide id")
     await Developer.findByIdAndDelete(_id)
@@ -87,4 +95,5 @@ program.command("delete <id>").action( async (_id) => {
     process.exit(0);
 });
 
+//Save all commands created
 program.parse(process.argv);

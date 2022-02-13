@@ -1,5 +1,7 @@
+//Imports
 const { Schema, model } = require("mongoose");
 
+//Schema mongoose developer
 const developerSchema = new Schema({
     name: {type: String},
     email:{type:String},
@@ -11,4 +13,5 @@ const developerSchema = new Schema({
     versionKey:false
 })
 
+//Export the model developer
 module.exports = model("developers", developerSchema)
