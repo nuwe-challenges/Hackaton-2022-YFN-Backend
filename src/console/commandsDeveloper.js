@@ -84,6 +84,7 @@ program.command("delete <id>").action( async (_id) => {
     await Developer.findByIdAndDelete(_id)
     console.log("Assistant deleted")
     await connection.close()
+    process.exit(0);
 });
 
 program.parse(process.argv);
