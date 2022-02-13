@@ -38,7 +38,7 @@ const developerQuestions = [
 
 program.version("1.0.0").description("Command line tool for managing the developers of the MWC");
 
-program.command("MWC-days").alias("MWC").action(()=>{
+program.command("MWC-days").action(()=>{
     console.log("The event of the MWC are going to be between these days:\n Feb 28, 2021 \n Mar 1, 2021 \n Mar 2, 2021 \n Mar 3, 2021")
     process.exit(0);
 })
